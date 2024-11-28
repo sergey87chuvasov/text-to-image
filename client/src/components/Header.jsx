@@ -1,7 +1,21 @@
+import { useContext } from 'react';
 import { assets } from '../assets/assets';
-import { delay, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { AppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const { user, setShowLogin } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const onClickHandler = () => {
+    if (user) {
+      navigate('/result');
+    } else {
+      setShowLogin(true);
+    }
+  };
+
   return (
     <motion.div
       className='flex flex-col justify-center items-center text-center my-20'
@@ -40,6 +54,7 @@ const Header = () => {
       </motion.p>
 
       <motion.button
+        onClick={onClickHandler}
         className='sm:text-lg text-white bg-black w-auto mt-8 px-12 py-2.5 flex items-center gap-2 rounded-full'
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
